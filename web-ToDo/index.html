@@ -1,11 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>待办</title>
+    <style>
+      body {
+        margin-top: 100px;
+        text-align: center;
+      }
+      li {
+        list-style: none;
+        margin-left: -150px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>待办事项</h1>
+
+    <input id="todoInput" type="text" placeholder="请输入待办事项..." />
+    <button onclick="addTodo()">添加</button>
+
+    <ul id="todoList"></ul>
+
+    <script>
+      const input = document.querySelector("#todoInput");
+      const list = document.querySelector("#todoList");
+
+      function addTodo() {
+        const text = input.value.trim();
+        if (text === "") return;
+
+        const li = document.createElement("li");
+        li.textContent = text;
+
+        li.addEventListener("click", () => {
+          li.classList.toggle("completed");
+        });
+
+        const btn = document.createElement("button");
+        btn.textContent = "删除";
+
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation(); // 防止触发 li 的点击事件
+          list.removeChild(li);
+        });
+        li.appendChild(btn);
+        list.appendChild(li);
+        input.value = "";
+        input.focus();
+      }
+    </script>
+  </body>
 </html>
